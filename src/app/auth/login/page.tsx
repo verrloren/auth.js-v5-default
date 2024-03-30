@@ -2,6 +2,7 @@ import { LoginForm } from "@/components/auth/login-form";
 import Logo from "@/components/navbar/Logo";
 import ArrowButton from "@/components/ui/ArrowButton";
 import Image from "next/image";
+import { Suspense } from "react";
 
 interface LoginPageProps {}
 
@@ -13,7 +14,6 @@ export default function LoginPage({}: LoginPageProps) {
 				<div className="lg:w-[90%] lg:h-[93%] w-[95%] h-[95%] 
 					flex items-center justify-center
 					rounded-xl bg-[#fff] shadow-xl">
-						``
 				
 						<div className="relative h-full w-[50%] flex items-center
 						 flex-col rounded-lg gap-8">
@@ -28,7 +28,9 @@ export default function LoginPage({}: LoginPageProps) {
 								Welcome back!
 							</h1> */}
 
-							<LoginForm />
+							<Suspense>
+								<LoginForm />
+							</Suspense>
 						</div>
 				
 						<Image

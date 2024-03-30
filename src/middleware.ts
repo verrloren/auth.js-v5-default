@@ -10,14 +10,22 @@ export default auth((req): any => {
 	const { nextUrl } = req;
 	const isLoggedIn = !!req.auth;
 
+	const isStaticFile = nextUrl.pathname.startsWith('/_next/');
 	const isApiAuthRoute = nextUrl.pathname.startsWith(apiAuthPrefix);
 	const isPublicRoute = publicRoutes.includes(nextUrl.pathname);
 	const isAuthRoute = authRoutes.includes(nextUrl.pathname);
+
+		// Allow access to static files
+		if (isStaticFile) {
+			return null;
+		}
 
 	//allow access to api auth routes
 	if (isApiAuthRoute) {
 		return null
 	}
+
+	
 
 	//redirect to default login redirect if logged in and trying to access an auth route
 	if(isAuthRoute) {
@@ -37,7 +45,6 @@ export default auth((req): any => {
 })
 
 export const config = {
-	//invoking middleware for all routes except those that match the regex
-	matcher: ['/((?!.+\\.[//w]+$|_next).*)', '/', '/(api|trpc)(.*)']
+  // Invoking middleware for all routes except those that match the regex
+  matcher: ['/((?!_next|.+\\.[//w]+$).*)', '/', '/(api|trpc)(.*)']
 }
-
